@@ -1,0 +1,26 @@
+name: WES_Analysis_11340_9740
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - pip
+  - typer
+  - loguru
+  - tqdm
+  - ipython
+  - jupyterlab
+  - matplotlib
+  - notebook
+  - numpy
+  - pandas
+  - scikit-learn
+  - ruff
+  - pytest
+  - xarray
+  - openpyxl
+  - zarr
+  - pip:
+    - python-dotenv
+    - mkdocs
+    - -e .
