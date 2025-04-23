@@ -10,12 +10,13 @@ PYTHON_INTERPRETER = python
 # COMMANDS                                                                      #
 #################################################################################
 
+## Update for use with conda or uv as decision is made.  Ruff linter.  Update so it can be run with slurm
 
 ## Install Python dependencies
 .PHONY: requirements
 requirements:
 	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
-	
+
 
 
 
@@ -49,6 +50,7 @@ test:
 ## Set up Python interpreter environment
 .PHONY: create_environment
 create_environment:
+	module load uv
 	uv venv --python $(PYTHON_VERSION)
 	@echo ">>> New uv virtual environment created. Activate with:"
 	@echo ">>> Windows: .\\\\.venv\\\\Scripts\\\\activate"

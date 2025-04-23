@@ -4,8 +4,8 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-Multisample WES variant analysis
-========================================
+
+
 
 
 # WES Data Analysis Workflow for Variant Identification
@@ -25,7 +25,11 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 ### 1.3 Prerequisites
 - Access to the `dna-seq-varlociraptor` pipeline.
 - Proficiency in Python programming.
-- Familiarity with Jupyter Notebook for data analysis and visualization.
+- **Access to Cluster Computers for Data Processing:**
+    - Due to the large size of the datasets, processing requires high-performance computing resources.
+    - This workflow is designed to run on the Great Lakes cluster.
+    - **Job Scheduling:** Utilize SLURM for job management and scheduling.
+    - **Package Management:** Use Conda/Mamba to manage dependencies.
 
 ## 1.3 Prerequisites
 - **Tools**: dna-seq-varlociraptor pipeline, Python, Jupyter Notebook
@@ -33,6 +37,11 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 - **Resources**:
   - [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)
   - [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM)
+  - [Modified dna-seq-varlociraptor Repository](https://github.com/delpropo/dna-seq-varlociraptor):
+  A forked version of the dna-seq-varlociraptor pipeline, optimized for the Great Lakes cluster. This version includes an additional rule to create a final TSV file.
+  - [Conda Documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/index.html): For managing dependencies and environments.
+  - [Snakemake workflow catalog documentation](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html): For instructions on setting up the pipeline
+
 
 ### 1.4 Expected Outcomes
 - A well-documented dataset of identified variants, suitable for future research, regardless of whether variants directly linkable to stuttering are found.
@@ -53,7 +62,9 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 The analysis process involves several key steps:
 
 ### 2.1 Data Storage and Access
-- **Action:** Download raw sequencing data (fastq files) and associated documentation.
+- **Step 1:** Download raw sequencing data (fastq files) and associated documentation.
+- **Step 2:** Verify the integrity of the downloaded FASTQ files by checking their MD5 checksums.
+    - Compare the MD5 values of the downloaded files with the provided MD5 checksum file.
 - **Primary Storage:** Great Lakes cluster
 - **Backup Location:** Dropbox and/or DataDen
 - **Access:** Ensure appropriate permissions are set for team members.
@@ -62,29 +73,58 @@ The analysis process involves several key steps:
 - **Access:** Ensure appropriate permissions are set for team members.
 
 ### 2.2 Data Preparation (Variant Calling)
-- **Action:** Process raw fastq files using the `dna-seq-varlociraptor` pipeline.
-- **Configuration:** Utilize the configuration file located in the `config/` directory to define pipeline parameters and variant annotation settings.
-- **Filtering:** Apply minimal filtering at this stage (e.g., remove silent mutations, low-impact variants) to retain potentially relevant variants.
-- **Output:** Generate a Tab-Separated Values (TSV) file for each sample, containing detailed variant information.
+- **Step 1:** Install the `dna-seq-varlociraptor` pipeline using the `deploy_dna-seq-varlociraptor_v5.16.0.sh` script. This script performs the following actions:
+    - Checks if Conda is installed.
+    - Checks if a Conda environment named `varloc_env` already exists. If not, it creates the environment.
+    - Activates the `varloc_env` environment.
+    - Installs `mamba`, `snakedeploy`, and `snakemake` using Conda/Mamba.
+    - Deploys the `dna-seq-varlociraptor` workflow (version 5.16.0) into the specified directory using `snakedeploy`.  Note that the final version of the pipeline may use a different version as updates are made.
+- **Step 2** Setup the `dna-seq-varlociraptor` pipeline on the Great Lakes cluster.
+    - Create the `samples.tsv` file to define the sample metadata, including sample IDs and associated information.
+    - Create the `units.tsv` file to specify the sequencing units, such as FASTQ file paths and read group information.
+    - Configure the `scenario.yaml` file to define the analysis scenario, including variant calling parameters and reference genome details.
+    -  Edit the `config.yaml` file to set global pipeline parameters, such as output directories, resource allocation, and filtering thresholds.
+- **Step 3** Process raw fastq files using the `dna-seq-varlociraptor` pipeline.
+    - **Configuration:** Utilize the configuration files (`samples.tsv`, `units.tsv`, `scenario.yaml`, `config.yaml`) to define pipeline parameters and variant annotation settings.
+    - **Filtering:** Apply minimal filtering at this stage (e.g., remove silent mutations, low-impact variants) to retain potentially relevant variants.
+    - **Output:** Generate a Tab-Separated Values (TSV) file for each sample, containing detailed variant information.
 
 ### 2.3 Post-Varlociraptor Data Processing
-- **Action 1:** Convert the individual sample TSV files into the Zarr format without modification. Zarr allows for efficient storage and retrieval of large datasets. The conversion from VCF to TSV is done by with `vembrane table` command and may be done manually outside of the `dna-seq-varlociraptor` pipeline. For more details, refer to the [vembrane GitHub Repository](https://github.com/vembrane/vembrane).
-- **Action 2:** Read the Zarr files and process them to create a single, grouped TSV file.
-- **Filtering:** Apply initial filtering to remove common variants based on allele frequency annotations or other criteria.
-- **Grouping:** Group the data by unique variants across all samples.
+- **Step 1:** Convert the individual sample TSV files into the Zarr format without modification. Zarr allows for efficient storage and retrieval of large datasets. The conversion from VCF to TSV is done by with `vembrane table` command and may be done manually outside of the `dna-seq-varlociraptor` pipeline. For more details, refer to the [vembrane GitHub Repository](https://github.com/vembrane/vembrane).
+- **Step 2:** Read the Zarr file for each sample and output a reformatted TSV for each sample.
+    - Filter to remove common variants based on allele frequency annotations.
+    - Groupby unique variants as there are multiple rows for each variant due to annotations which can apply multiple values for each unique variant. This step ensures that the dataset is structured to combine sample genotypes information for each variant for downstream analysis, with each row representing a unique variant and its corresponding sample information.
+    - A consolidated TSV file where each row contains a unique variant with annotation and the associated genotype for each details.
+
+- **step 3:** Combine Individual Sample Files
+    - Merge all individual sample TSV files into a single consolidated file with each row representing a unique variant with genotype information for each sample in columns.
+    - Filter variants to remove variants which are too common across samples which will be defined.
+    - Ensure that the consolidated file is structured for downstream analysis.
+    - Save the consolidated file in TSV format for further filtering and analysis.
+
 
 ### 2.4 Analysis
-- **Action 1 (Filtering):** Further filter the grouped TSV file to remove:
+- **Step 1 (Filtering):** Further filter the grouped TSV file to remove:
     - Common variants (using stricter frequency thresholds).
     - Variants appearing excessively across samples (potential sequencing artifacts).
     - Additional filtering criteria will be applied as necessary, based on the data and project requirements.
-- **Action 2 (Gene-Centric Analysis):**
+- **Step 2 (Gene-Centric Analysis):**
     - Group variants by gene.
     - Focus on genes previously implicated or suspected in stuttering.
     - Map identified variants to this list of candidate genes to assess potential correlations.
-- **Action 3 (Variant-Impact Analysis):**
+- **Step 3 (Variant-Impact Analysis):**
     - Search for variants predicted to have a significant impact on protein function (e.g., missense, nonsense, frameshift mutations).
     - Investigate the potential role of genes harboring these impactful variants in stuttering, even if not previously suspected.
+- **Step 4 (Iterative Refinement)**
+    - Refine filtering criteria based on initial findings.
+    - Adjust analysis parameters to focus on variants of interest.
+- **Step 5 (Reporting):**
+    - Generate reports summarizing findings, including:
+        - List of identified variants.
+        - Gene-centric analysis results.
+        - Variant-impact analysis results.
+    - Visualizations to illustrate key findings and variant distributions.
+
 
 ## 3. Potential Issues and Considerations
 
@@ -121,17 +161,13 @@ The analysis process involves several key steps:
 │                         `1.0-jqp-initial-data-exploration`.
 │
 ├── pyproject.toml     <- Project configuration file with package metadata for
-│                         WES_Analysis_11340_9740 and configuration for tools like black
+│                         WES_Analysis_11340_9740 and configuration for tools like ruff
 │
 ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
 │
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures        <- Generated graphics and figures to be used in reporting
 │
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
 │
 └── WES_Analysis_11340_9740   <- Source code for use in this project.
     │
@@ -155,19 +191,21 @@ The analysis process involves several key steps:
 
 ## 5. Example Workflow Diagram
 
-*(A flowchart/diagram illustrating the steps from raw data to final analysis would be beneficial here. This can be created using tools like draw.io, Lucidchart, or Mermaid syntax within Markdown if supported).*
+
 
 ```mermaid
-graph LR
+graph TD
     A[Raw FASTQ Files] --> B(dna-seq-varlociraptor Pipeline);
     B -- Sample TSV --> C(Convert to Zarr);
-    C --> D(Group Variants & Initial Filter);
-    D -- Grouped TSV --> E{Analysis};
-    E -- Gene-Centric --> F[Candidate Gene Analysis];
-    E -- Impact-Centric --> G[Protein Impact Analysis];
-    F --> H[Results & Report];
-    G --> H;
-```
+    C --> D(Groupby Variants & Initial Filter);
+    D -- Variant groupby TSV --> E[Combine Samples to Single File & Filter];
+    E -- Groupby sample TSV --> J[Additional Filtering];
+    J --> F{Analysis};
+    F --> G[Gene-Centric Analysis];
+    F --> H[Impact-Centric Analysis];
+    G --> I[Results];
+    I --> K[Report];
+    H --> I;
+    I -- Refine filter --> F;
 
----
-*This document provides a high-level overview. Detailed parameters and specific commands will be documented within the respective script headers, configuration files, and Jupyter notebooks.*
+```
