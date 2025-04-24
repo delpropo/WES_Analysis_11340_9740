@@ -18,12 +18,18 @@ gantt
     title WES Data Analysis Timeline
     dateFormat YYYY-MM-DD
     section WES
-        DNA Submitted          :done,   wes1, 2024-04-07, 2d
+        DNA Submitted          :done,   wes1, 2025-04-07, 2d
         Sequencing             :active, wes2, after wes1, 90d
         QC and Documentation   :        wes3, after wes2, 7d
         Variant Calling        :        analysis1, after wes3, 14d
         Post-Processing        :        analysis2, after analysis1, 14d
         Analysis               :        analysis3, after analysis2, 30d
+    section Development        :
+        Post-Processing Dev    :active, dev1, 2025-04-01, 90d
+        Analysis Dev           :active, dev2, 2025-05-01, 60d
+    section Vacation
+        Vacation               :        vac1, 2025-06-12, 17d
+
 ```
 
 
@@ -75,7 +81,7 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 - **Timeline and funding:** The project is funded until September 2025, and any delays in data availability may impact the analysis timeline.
 - **Pipeline Issues:** Variant identification pipelines are always improving.  The current pipeline may miss variants or not have enough annotation.  Pipeline risk will be reduced by running it on the initial 12 samples.
 - **Storage:** The size of the data may be larger than expected, and storage space should be monitored.  A large number of intermediary files can be created during WES analysis.  Additional storage may be needed on the Great Lakes cluster or modifications.
-- 7.7TB of 20TB in use as of 4/24/25
+    - 7.7TB of 20TB in use as of 4/24/25
 
 
 
