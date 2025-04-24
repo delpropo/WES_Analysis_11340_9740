@@ -10,7 +10,17 @@
 
 # WES Data Analysis Workflow for Variant Identification
 
+## Gantt Chart
 
+
+```mermaid
+gantt
+    title A Gantt Diagram
+    dateFormat YYYY-MM-DD
+    section WES
+        DNA Submitted          :done,   wes1, 2024-01-01, 30d
+        WES                    :active, wes2, after wes1, 20d
+```
 
 
 
@@ -27,8 +37,10 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 ## 1.3 Prerequisites
 - **Tools**:
     - dna-seq-varlociraptor pipeline
-    - cookie cutter data science,
-    - Python,
+    - Snakemake
+    - Slurm
+    - Python
+    - cookie cutter data science
     - Jupyter Notebook(TBD)
 - **Data**: 71 WES samples in FASTQ format
 - **Access to Cluster Computers for Data Processing:**
@@ -50,13 +62,16 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 - A well-documented dataset of identified variants, suitable for future research, regardless of whether variants directly linkable to stuttering are found.
 - Sequencing should be completed in late June or July 2025 and final analysis should be completed by September 2025.
 - **Minimum Deliverable**: Well-documented WES dataset even if no significant variants are found.
+    - Fastq files, associated documents from the core, md5 checksum files, tables with sample id and metadata.
 - **Best Case:** Identification of one or more variants strongly associated with stuttering, enabling correlation studies with existing MRI data.
 
 ### 1.5 Potential Pitfalls
 - **Data Availability:** The raw sequencing data (fastq files) are expected in late June or July 2025, but delays are possible.
 - **Sequencing Failure:** There is a possibility of low quality sequencing data or failures in one or more samples when the WES is completed.  Analysis will be performed on the data that is available.
 - **Timeline and funding:** The project is funded until September 2025, and any delays in data availability may impact the analysis timeline.
-- **Pipeline Issues:** Potential challenges with the `dna-seq-varlociraptor` pipeline might lead to missed variants, possibly requiring modifications. To mitigate this, an initial run on a subset of 12 samples will be performed.
+- **Pipeline Issues:** Variant identification pipelines are always improving.  The current pipeline may miss variants or not have enough annotation.  Pipeline risk will be reduced by running it on the initial 12 samples.
+- **Storage:** The size of the data may be larger than expected, and storage space should be monitored.  A large number of intermediary files can be created during WES analysis.  Additional storage may be needed on the Great Lakes cluster or modifications.
+
 
 
 ### 1.6 References
@@ -73,11 +88,11 @@ The analysis process involves several key steps:
 - **Step 2:** Verify the integrity of the downloaded FASTQ files by checking their MD5 checksums.
     - Compare the MD5 values of the downloaded files with the provided MD5 checksum file.
 - **Primary Storage:** Great Lakes cluster
+    - **Location:** `/path/on/dataden/` (TBD)
 - **Backup Location:** Dropbox and/or DataDen
+    - **Location:** `/path/on/dataden/` (TBD)
 - **Access:** Ensure appropriate permissions are set for team members.
-- **Primary Storage:** `TBD`
-- **Backup Location:** `TBD`
-- **Access:** Ensure appropriate permissions are set for team members.
+
 
 ### 2.2 Data Preparation (Variant Calling)
 - **Step 1:** Install the `dna-seq-varlociraptor` pipeline using the `deploy_dna-seq-varlociraptor_v5.16.0.sh` script. This script performs the following actions:
@@ -113,7 +128,7 @@ The analysis process involves several key steps:
 ### 2.4 Analysis
 - **Step 1 (Filtering):** Further filter the grouped TSV file to remove:
     - Common variants (using stricter frequency thresholds).
-    - Variants appearing excessively across samples (potential sequencing artifacts).
+    - Identical variants appearing excessively across samples (potential sequencing artifacts).
     - Additional filtering criteria will be applied as necessary, based on the data and project requirements.
 - **Step 2 (Gene-Centric Analysis):**
     - Group variants by gene.
@@ -133,7 +148,7 @@ The analysis process involves several key steps:
     - Visualizations to illustrate key findings and variant distributions.
 
 
-## 3. Potential Issues and Considerations
+## 3. Analysis Considerations
 
 - **Sample Size:** Analyzing only 71 samples is relatively small for discovering novel gene associations with high statistical confidence. Finding multiple significant variants within a single gene across this cohort might be challenging.
 - **Leveraging Prior Knowledge:** The analysis benefits significantly from existing research identifying candidate genes for stuttering. This allows for a more targeted investigation within this dataset.
