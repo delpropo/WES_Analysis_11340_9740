@@ -10,47 +10,54 @@
 
 # WES Data Analysis Workflow for Variant Identification
 
-This document outlines the workflow for analyzing Whole Exome Sequencing (WES) data from 71 samples provided by Illumina. The primary goal is to identify genetic variants that may be associated with stuttering, potentially allowing for combined analysis with MRI data.  The initial workflow will be performed on a subset of 12 samples to validate the pipeline and identify any issues and reduce risk before processing the full dataset.
+
 
 
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-To define a standardized workflow for analyzing 71 WES datasets to identify genetic variants potentially linked to stuttering.
+This document outlines the workflow for analyzing Whole Exome Sequencing (WES) data from 71 samples provided by Illumina. The primary goal is to identify genetic variants that may be associated with stuttering, potentially allowing for combined analysis with MRI data.  The initial workflow will be performed on a subset of 12 samples to validate the pipeline and identify any issues and reduce risk before processing the full dataset.
 
 ### 1.2 Scope
 This workflow specifically covers the analysis of the 71 WES datasets mentioned. Analysis beyond these datasets is outside the scope of this document.
 
-### 1.3 Prerequisites
-- Access to the `dna-seq-varlociraptor` pipeline.
-- Proficiency in Python programming.
+
+
+## 1.3 Prerequisites
+- **Tools**:
+    - dna-seq-varlociraptor pipeline
+    - cookie cutter data science,
+    - Python,
+    - Jupyter Notebook(TBD)
+- **Data**: 71 WES samples in FASTQ format
 - **Access to Cluster Computers for Data Processing:**
     - Due to the large size of the datasets, processing requires high-performance computing resources.
     - This workflow is designed to run on the Great Lakes cluster.
     - **Job Scheduling:** Utilize SLURM for job management and scheduling.
     - **Package Management:** Use Conda/Mamba to manage dependencies.
-
-## 1.3 Prerequisites
-- **Tools**: dna-seq-varlociraptor pipeline, Python, Jupyter Notebook
-- **Data**: 71 WES samples in FASTQ format
 - **Resources**:
   - [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)
   - [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM)
   - [Modified dna-seq-varlociraptor Repository](https://github.com/delpropo/dna-seq-varlociraptor):
   A forked version of the dna-seq-varlociraptor pipeline, optimized for the Great Lakes cluster. This version includes an additional rule to create a final TSV file.
   - [Conda Documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/index.html): For managing dependencies and environments.
-  - [Snakemake workflow catalog documentation](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html): For instructions on setting up the pipeline
+  - [Snakemake workflow catalog documentation](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html): For instructions on setting up the pipeline with snakedeploy
+  - [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) Template for post variant calling analysis.
 
 
 ### 1.4 Expected Outcomes
 - A well-documented dataset of identified variants, suitable for future research, regardless of whether variants directly linkable to stuttering are found.
+- Sequencing should be completed in late June or July 2025 and final analysis should be completed by September 2025.
+- **Minimum Deliverable**: Well-documented WES dataset even if no significant variants are found.
 - **Best Case:** Identification of one or more variants strongly associated with stuttering, enabling correlation studies with existing MRI data.
 
 ### 1.5 Potential Pitfalls
 - **Data Availability:** The raw sequencing data (fastq files) are expected in late June or July 2025, but delays are possible.
-- **Timeline:** Project funding is scheduled to end in September 2025.
+- **Sequencing Failure:** There is a possibility of low quality sequencing data or failures in one or more samples when the WES is completed.  Analysis will be performed on the data that is available.
+- **Timeline and funding:** The project is funded until September 2025, and any delays in data availability may impact the analysis timeline.
 - **Pipeline Issues:** Potential challenges with the `dna-seq-varlociraptor` pipeline might lead to missed variants, possibly requiring modifications. To mitigate this, an initial run on a subset of 12 samples will be performed.
+
 
 ### 1.6 References
 - **Variant Analysis Pipeline:** [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)

@@ -1,8 +1,8 @@
 # Data
-/data/*
+/data/**
 
 # workspace local files
-/workspace/* 
+/workspace/**
 
 
 
