@@ -20,11 +20,10 @@ gantt
     section WES
         DNA Submitted          :done,   wes1, 2024-04-07, 2d
         Sequencing             :active, wes2, after wes1, 90d
-        QC and Documentation   :        wes3, after wes2, 30d
-        Data Preparation       :        analysis1, after wes3, 7d
-        Variant Calling        :        analysis2, after analysis1, 14d
-        Post-Processing        :        analysis3, after analysis2, 7d
-        Analysis               :        analysis4, after analysis3, 30d
+        QC and Documentation   :        wes3, after wes2, 7d
+        Variant Calling        :        analysis1, after wes3, 14d
+        Post-Processing        :        analysis2, after analysis1, 14d
+        Analysis               :        analysis3, after analysis2, 30d
 ```
 
 
