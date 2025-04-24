@@ -25,8 +25,8 @@ gantt
         Post-Processing        :        analysis2, after analysis1, 14d
         Analysis               :        analysis3, after analysis2, 30d
     section Development        :
-        Post-Processing Dev    :active, dev1, 2025-04-01, 90d
-        Analysis Dev           :active, dev2, 2025-05-01, 60d
+        Post-Processing Dev    :active, dev1, 2025-04-01, 100d
+        Analysis Dev           :active, dev2, 2025-05-01, 120d
     section Vacation
         Vacation               :        vac1, 2025-06-12, 17d
 
