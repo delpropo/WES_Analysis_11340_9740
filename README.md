@@ -4,7 +4,12 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
+## Links within the Project
 
+- [Candidate Genes for association with Stuttering](../references/genes/README.md)
+- [Workflow Overview](#2-workflow-overview)
+- [Project Organization](#4-project-organization): Directory structure and file organization for the project.
+- [Example Workflow Diagram](#5-example-workflow-diagram): Visual representation of the analysis pipeline.
 
 
 
@@ -85,10 +90,11 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 
 
 
-### 1.6 References
+### 1.6 References for Tools and Resources
 - **Variant Analysis Pipeline:** [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)
 - **Shared Data:** [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM) (Access Required)
 - **Vembrane:** [vembrane GitHub Repository](https://github.com/vembrane/vembrane)
+
 
 ## 2. Workflow Overview
 
