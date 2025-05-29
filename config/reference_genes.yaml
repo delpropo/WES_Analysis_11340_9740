@@ -1,0 +1,35 @@
+    # List of diseases and biological pathways/systems for gene reference
+# Extracted from README.md in references/genes/
+# extract from genecards.org
+diseases:
+  - name: Stuttering
+    reference: references/genes/Stuttering_genes.tsv
+  - name: Attention-Deficit/Hyperactivity Disorder
+    reference: references/genes/ADHD_genes.tsv
+  - name: Tic Disorders
+    reference: references/genes/Tic_Disorders_genes.tsv
+  - name: Autism Spectrum Disorders (ASD)
+    reference: references/genes/Autism_genes.tsv
+  - name: Parkinson's Disease
+    reference: references/genes/Parkinsons_genes.tsv
+
+pathways:
+    # List of biological pathways/systems for gene reference
+  - name: Basal Ganglia
+    reference: references/genes/Basal_Ganglia_genes.tsv
+  - name: Intracellular Trafficking
+    reference: references/genes/Intracellular_Trafficking_genes.tsv
+
+# output from genecards search
+genecards:
+  - name: stuttering
+    reference: references/genes/20250529_GeneCards-stuttering.csv
+  - name: ADHD
+    reference: references/genes/20250529_GeneCards-ADHD.csv
+  - name: Tic
+    reference: references/genes/20250529_GeneCards-Tic.csv
+  - name: Autism
+    reference: references/genes/20250529_GeneCards-Autism.csv
+  - name: Parkinsons
+    reference: references/genes/20250529_GeneCards-Parkinsons.csv
+
