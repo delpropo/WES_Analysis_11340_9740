@@ -16,25 +16,24 @@
 # WES Data Analysis Workflow for Variant Identification
 
 ## Timeline
-
-
 ```mermaid
 gantt
     title WES Data Analysis Timeline
     dateFormat YYYY-MM-DD
     section WES
         DNA Submitted          :done,   wes1, 2025-04-07, 2d
-        Sequencing             :active, wes2, after wes1, 90d
-        QC and Documentation   :        wes3, after wes2, 7d
-        Variant Calling        :        analysis1, after wes3, 14d
+        Sequencing             :done,   wes2, after wes1, 2025-06-17
+        Data Transfer          :done,   wes_transfer, 2025-06-30, 2d
+        QC and Documentation   :active, wes3, 2025-07-01, 7d
+        Variant Calling        :active, analysis1, after wes_transfer, 14d
         Post-Processing        :        analysis2, after analysis1, 14d
         Analysis               :        analysis3, after analysis2, 30d
-    section Development        :
+    section Development
         Post-Processing Dev    :active, dev1, 2025-04-01, 100d
         Analysis Dev           :active, dev2, 2025-05-01, 120d
     section Vacation
         Vacation               :        vac1, 2025-06-12, 17d
-
+        Returned from Vacation :milestone, vac2, 2025-06-30, 0d
 ```
 
 
