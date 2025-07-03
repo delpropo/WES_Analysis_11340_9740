@@ -37,7 +37,7 @@ gantt
 
 **Legend:**
 - 🟩 done
-- 🟨 active
+- 🟦 active
 - ⬜ planned
 > **Note:** The vertical red line in the Gantt chart represents the current date.
 
