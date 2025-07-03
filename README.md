@@ -32,10 +32,14 @@ gantt
         Post-Processing Dev    :active, dev1, 2025-04-01, 100d
         Analysis Dev           :active, dev2, 2025-05-01, 120d
     section Vacation
-        Vacation               :        vac1, 2025-06-12, 17d
-        Returned from Vacation :milestone, vac2, 2025-06-30, 0d
+        Vacation               :done,   vac1, 2025-06-12, 17d
 ```
 
+**Legend:**
+- <span style="color:#bfc1c2;">■</span> done
+- <span style="color:#91a0f2;">■</span> active
+- <span style="color:#5166e0;">■</span> planned
+> **Note:** The vertical red line in the Gantt chart represents the current date.
 
 
 ## 1. Introduction
