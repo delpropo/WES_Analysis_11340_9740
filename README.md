@@ -36,9 +36,9 @@ gantt
 ```
 
 **Legend:**
-- <span style="color:#bfc1c2;">■</span> done
-- <span style="color:#91a0f2;">■</span> active
-- <span style="color:#5166e0;">■</span> planned
+- 🟩 done
+- 🟨 active
+- ⬜ planned
 > **Note:** The vertical red line in the Gantt chart represents the current date.
 
 
