@@ -108,10 +108,12 @@ The analysis process involves several key steps:
 - **Step 2:** Verify the integrity of the downloaded FASTQ files by checking their MD5 checksums.
     - Compare the MD5 values of the downloaded files with the provided MD5 checksum file.
 - **Primary Storage:** Great Lakes cluster
-    - **Location:** `/path/on/dataden/` (TBD)
+    - **Location:** `/nfs/turbo/umms-sooeunc/9790-JD`
+    - **Location:** `/nfs/turbo/umms-sooeunc/13340-JD`
 - **Backup Location:** Dropbox and/or DataDen
-    - **Location:** `/path/on/dataden/` (TBD)
+    - **dropbox:** MSA-ChangLabUM/ImagingGenetics/DNA processing/seq_data_backup
 - **Access:** Ensure appropriate permissions are set for team members.
+- **Analysis Location:** `/nfs/turbo/umms-sooeunc/9790-JD/analysis` but may be moved.
 
 
 ### 2.2 Data Preparation (Variant Calling)
