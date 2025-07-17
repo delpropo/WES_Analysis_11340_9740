@@ -15,7 +15,7 @@ PYTHON_INTERPRETER = python
 ## Install Python dependencies
 .PHONY: requirements
 requirements:
-	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
+	bash -c "source ~/.bashrc && module load uv && uv sync --extra dev"
 
 
 
@@ -50,8 +50,7 @@ test:
 ## Set up Python interpreter environment
 .PHONY: create_environment
 create_environment:
-	module load uv
-	uv venv --python $(PYTHON_VERSION)
+	bash -c "source ~/.bashrc && module load uv && uv venv --python $(PYTHON_VERSION)"
 	@echo ">>> New uv virtual environment created. Activate with:"
 	@echo ">>> Windows: .\\\\.venv\\\\Scripts\\\\activate"
 	@echo ">>> Unix/macOS: source ./.venv/bin/activate"
@@ -68,6 +67,11 @@ create_environment:
 .PHONY: data
 data: requirements
 	$(PYTHON_INTERPRETER) WES_Analysis_11340_9740/dataset.py
+
+## Combine gene references
+.PHONY: combine_genes
+combine_genes: requirements
+	$(PYTHON_INTERPRETER) WES_Analysis_11340_9740/combine_gene_references.py
 
 
 #################################################################################
