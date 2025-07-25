@@ -1,6 +1,9 @@
 # Data
 /data/**
 
+# Local
+/local/**
+
 # workspace local files
 /workspace/**
 

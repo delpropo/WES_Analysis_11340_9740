@@ -17,8 +17,8 @@ output_file = ref_dir / f'{current_date}_combined_info.tsv'
 file_association = {
     'Parkinsons_genes.tsv': 'parkinsons',
     '20250529_GeneCards-Parkinsons.csv': 'parkinsons',
-    'Autism_genes.tsv': 'autism',
-    '20250529_GeneCards-Autism.csv': 'autism',
+ #   'Autism_genes.tsv': 'autism',
+ #   '20250529_GeneCards-Autism.csv': 'autism',
     'ADHD_genes.tsv': 'ADHD',
     '20250529_GeneCards-ADHD.csv': 'ADHD',
     'Stuttering_genes.tsv': 'stuttering',
