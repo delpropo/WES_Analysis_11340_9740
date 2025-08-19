@@ -7,6 +7,9 @@
 # workspace local files
 /workspace/**
 
+# Notebooks
+/notebooks/**
+
 
 
 # Mac OS-specific storage files
@@ -155,6 +158,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+config.env
 
 # Spyder project settings
 .spyderproject
@@ -192,3 +196,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Reports and all subfolders/files
+reports/
+reports/**

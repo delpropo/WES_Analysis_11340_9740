@@ -73,6 +73,10 @@ data: requirements
 combine_genes: requirements
 	$(PYTHON_INTERPRETER) WES_Analysis_11340_9740/combine_gene_references.py
 
+## Start Jupyter notebook with SLURM (1 CPU, 7GB memory)
+.PHONY: notebook
+notebook:
+	srun --cpus-per-task=1 --mem=7G --time=1:00:00 --pty bash -c "module load uv &&  source .venv/bin/activate && jupyter lab notebooks/20250805.ipynb --no-browser --ip=0.0.0.0 --port=8888"
 
 #################################################################################
 # Self Documenting Commands                                                     #

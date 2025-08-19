@@ -25,7 +25,7 @@ gantt
         Sequencing             :done,   wes2, after wes1, 2025-06-17
         Data Transfer          :done,   wes_transfer, 2025-06-30, 2d
         QC and Documentation   :active, wes3, 2025-07-01, 7d
-        Variant Calling        :active, analysis1, after wes_transfer, 14d
+        Variant Calling        :done,   analysis1, after wes_transfer, 14d
         Post-Processing        :        analysis2, after analysis1, 14d
         Analysis               :        analysis3, after analysis2, 30d
     section Development

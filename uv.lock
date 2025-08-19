@@ -72,6 +72,12 @@ wheels = [
 ]
 
 [[package]]
+name = "asciitree"
+version = "0.3.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/6a/885bc91484e1aa8f618f6f0228d76d0e67000b0fdd6090673b777e311913/asciitree-0.3.3.tar.gz", hash = "sha256:4aa4b9b649f85e3fcb343363d97564aa1fb62e249677f2e18a96765145cc0f6e", size = 3951 }
+
+[[package]]
 name = "asttokens"
 version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -391,6 +397,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/91/50/a9d80c47ff289c611ff12e63f7c5d13942c65d68125160cefd768c73e6e4/executing-2.2.0.tar.gz", hash = "sha256:5d108c028108fe2551d1a7b2e8b713341e2cb4fc0aa7dcf966fa4327a5226755", size = 978693 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7b/8f/c4d9bafc34ad7ad5d8dc16dd1347ee0e507a52c3adb6bfa8887e1c6a26ba/executing-2.2.0-py2.py3-none-any.whl", hash = "sha256:11387150cad388d62750327a53d3339fad4888b39a6fe233c3afbb54ecffd3aa", size = 26702 },
+]
+
+[[package]]
+name = "fasteners"
+version = "0.19"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/d4/e834d929be54bfadb1f3e3b931c38e956aaa3b235a46a3c764c26c774902/fasteners-0.19.tar.gz", hash = "sha256:b4f37c3ac52d8a445af3a66bce57b33b5e90b97c696b7b984f530cf8f0ded09c", size = 24832 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/bf/fd60001b3abc5222d8eaa4a204cd8c0ae78e75adc688f33ce4bf25b7fafa/fasteners-0.19-py3-none-any.whl", hash = "sha256:758819cb5d94cdedf4e836988b74de396ceacb8e2794d21f82d131fd9ee77237", size = 18679 },
 ]
 
 [[package]]
@@ -948,6 +963,15 @@ wheels = [
 ]
 
 [[package]]
+name = "narwhals"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e2/8f/51d14e402c4f9d281a2e153a6a805cad5460088027a999faf264b54e7641/narwhals-2.0.1.tar.gz", hash = "sha256:235e61ca807bc21110ca36a4d53888ecc22c42dcdf50a7c886e10dde3fd7f38c", size = 525541 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7f/26/43caf834e47c63883a5eddc02893b7fdbe6a0a4508ff6dc401907f3cc085/narwhals-2.0.1-py3-none-any.whl", hash = "sha256:837457e36a2ba1710c881fb69e1f79ce44fb81728c92ac378f70892a53af8ddb", size = 385436 },
+]
+
+[[package]]
 name = "nbclient"
 version = "0.10.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1037,6 +1061,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/54/d2/92fa3243712b9a3e8bafaf60aac366da1cada3639ca767ff4b5b3654ec28/notebook_shim-0.2.4.tar.gz", hash = "sha256:b4b2cfa1b65d98307ca24361f5b30fe785b53c3fd07b7a47e89acb5e6ac638cb", size = 13167 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f9/33/bd5b9137445ea4b680023eb0469b2bb969d61303dedb2aac6560ff3d14a1/notebook_shim-0.2.4-py3-none-any.whl", hash = "sha256:411a5be4e9dc882a074ccbcae671eda64cceb068767e9a3419096986560e1cef", size = 13307 },
+]
+
+[[package]]
+name = "numcodecs"
+version = "0.13.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/85/56/8895a76abe4ec94ebd01eeb6d74f587bc4cddd46569670e1402852a5da13/numcodecs-0.13.1.tar.gz", hash = "sha256:a3cf37881df0898f3a9c0d4477df88133fe85185bffe57ba31bcc2fa207709bc", size = 5955215 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/14/c0/6d72cde772bcec196b7188731d41282993b2958440f77fdf0db216f722da/numcodecs-0.13.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:96add4f783c5ce57cc7e650b6cac79dd101daf887c479a00a29bc1487ced180b", size = 1580012 },
+    { url = "https://files.pythonhosted.org/packages/94/1d/f81fc1fa9210bbea97258242393a1f9feab4f6d8fb201f81f76003005e4b/numcodecs-0.13.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:237b7171609e868a20fd313748494444458ccd696062f67e198f7f8f52000c15", size = 1176919 },
+    { url = "https://files.pythonhosted.org/packages/16/e4/b9ec2f4dfc34ecf724bc1beb96a9f6fa9b91801645688ffadacd485089da/numcodecs-0.13.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:96e42f73c31b8c24259c5fac6adba0c3ebf95536e37749dc6c62ade2989dca28", size = 8625842 },
+    { url = "https://files.pythonhosted.org/packages/fe/90/299952e1477954ec4f92813fa03e743945e3ff711bb4f6c9aace431cb3da/numcodecs-0.13.1-cp310-cp310-win_amd64.whl", hash = "sha256:eda7d7823c9282e65234731fd6bd3986b1f9e035755f7fed248d7d366bb291ab", size = 828638 },
 ]
 
 [[package]]
@@ -1208,6 +1247,19 @@ wheels = [
 ]
 
 [[package]]
+name = "plotly"
+version = "6.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "narwhals" },
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6e/5c/0efc297df362b88b74957a230af61cd6929f531f72f48063e8408702ffba/plotly-6.2.0.tar.gz", hash = "sha256:9dfa23c328000f16c928beb68927444c1ab9eae837d1fe648dbcda5360c7953d", size = 6801941 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/20/f2b7ac96a91cc5f70d81320adad24cc41bf52013508d649b1481db225780/plotly-6.2.0-py3-none-any.whl", hash = "sha256:32c444d4c940887219cb80738317040363deefdfee4f354498cc0b6dab8978bd", size = 9635469 },
+]
+
+[[package]]
 name = "pluggy"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1286,6 +1338,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217 },
+]
+
+[[package]]
+name = "pyliftover"
+version = "0.4.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/00/e8/f09804e990d66d235f4c90cb343bdc540ec17b67c925e72c67432a4d6130/pyliftover-0.4.1.tar.gz", hash = "sha256:33ad187e35d1b6662ba446432f4dd1a808ac2914ce1645eef37598fa5a3860cd", size = 11911 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b1/61/e3afcf369fe45223cfebfbb8cde46d521e2786889c1b3eed01ee08adb626/pyliftover-0.4.1-py3-none-any.whl", hash = "sha256:49ef8938010d2e934abb483d3ef8073897ed6b88bcd978c486c8f7631c24dbc1", size = 12394 },
 ]
 
 [[package]]
@@ -1820,9 +1881,14 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "camelot-py" },
+    { name = "jupyterlab" },
+    { name = "numpy" },
     { name = "pandas" },
+    { name = "plotly" },
+    { name = "pyliftover" },
     { name = "pyyaml" },
     { name = "ruff" },
+    { name = "zarr" },
 ]
 
 [package.optional-dependencies]
@@ -1839,14 +1905,19 @@ dev = [
 requires-dist = [
     { name = "camelot-py", extras = ["cv"], specifier = ">=1.0.0" },
     { name = "jupyter", marker = "extra == 'dev'", specifier = ">=1.0.0" },
+    { name = "jupyterlab", specifier = ">=4.4.4" },
     { name = "matplotlib", marker = "extra == 'dev'", specifier = ">=3.0.0" },
+    { name = "numpy", specifier = ">=2.2.6" },
     { name = "numpy", marker = "extra == 'dev'", specifier = ">=1.20.0" },
     { name = "openpyxl", marker = "extra == 'dev'", specifier = ">=3.0.0" },
     { name = "pandas", specifier = ">=2.2.3" },
+    { name = "plotly", specifier = ">=6.2.0" },
+    { name = "pyliftover", specifier = ">=0.4.1" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0.0" },
     { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "ruff", specifier = ">=0.11.7" },
     { name = "scikit-learn", marker = "extra == 'dev'", specifier = ">=1.0.0" },
+    { name = "zarr", specifier = ">=2.18.3" },
 ]
 
 [[package]]
@@ -1856,4 +1927,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/41/53/2e0253c5efd69c9656b1843892052a31c36d37ad42812b5da45c62191f7e/widgetsnbextension-4.0.14.tar.gz", hash = "sha256:a3629b04e3edb893212df862038c7232f62973373869db5084aed739b437b5af", size = 1097428 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ca/51/5447876806d1088a0f8f71e16542bf350918128d0a69437df26047c8e46f/widgetsnbextension-4.0.14-py3-none-any.whl", hash = "sha256:4875a9eaf72fbf5079dc372a51a9f268fc38d46f767cbf85c43a36da5cb9b575", size = 2196503 },
+]
+
+[[package]]
+name = "zarr"
+version = "2.18.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asciitree" },
+    { name = "fasteners", marker = "sys_platform != 'emscripten'" },
+    { name = "numcodecs" },
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/23/c4/187a21ce7cf7c8f00c060dd0e04c2a81139bb7b1ab178bba83f2e1134ce2/zarr-2.18.3.tar.gz", hash = "sha256:2580d8cb6dd84621771a10d31c4d777dca8a27706a1a89b29f42d2d37e2df5ce", size = 3603224 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/c9/142095e654c2b97133ff71df60979422717b29738b08bc8a1709a5d5e0d0/zarr-2.18.3-py3-none-any.whl", hash = "sha256:b1f7dfd2496f436745cdd4c7bcf8d3b4bc1dceef5fdd0d589c87130d842496dd", size = 210723 },
 ]

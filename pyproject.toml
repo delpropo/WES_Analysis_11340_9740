@@ -18,9 +18,14 @@ classifiers = [
 requires-python = "~=3.10.0"
 dependencies = [
     "camelot-py[cv]>=1.0.0",
+    "jupyterlab>=4.4.4",
+    "numpy>=2.2.6",
     "pandas>=2.2.3",
+    "plotly>=6.2.0",
+    "pyliftover>=0.4.1",
     "pyyaml>=6.0.2",
     "ruff>=0.11.7",
+    "zarr>=2.18.3",
 ]
 
 [project.optional-dependencies]
