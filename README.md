@@ -4,12 +4,14 @@
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
+
 ## Links within the Project
 
 - [Candidate Genes for association with Stuttering](../references/genes/README.md)
 - [Workflow Overview](#2-workflow-overview)
 - [Project Organization](#4-project-organization): Directory structure and file organization for the project.
 - [Example Workflow Diagram](#5-example-workflow-diagram): Visual representation of the analysis pipeline.
+- [Filtering Criteria and Steps](docs/filtering.md)
 
 
 
