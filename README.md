@@ -39,8 +39,8 @@ This repository contains **project-specific** documentation and ad-hoc analysis 
 | Data Transfer | Completed | June 2025 |
 | Variant Calling (dna-seq-varlociraptor) | Completed | July 2025 |
 | Post-Processing Pipeline (Snakemake) | Completed | October 2025 |
-| GOI Analysis Extension | Completed | 2025 |
-| Individual Analysis & QC | In Progress | — |
+| GOI Analysis Extension | Completed | December 2025 |
+| Individual Analysis & QC | Completed | December 2025 |
 
 
 ## 1. Introduction
