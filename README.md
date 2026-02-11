@@ -46,54 +46,62 @@ This repository contains **project-specific** documentation and ad-hoc analysis 
 ## 1. Introduction
 
 ### 1.1 Purpose
-This document outlines the workflow for analyzing Whole Exome Sequencing (WES) data from 71 samples provided by Illumina. The primary goal is to identify genetic variants that may be associated with stuttering, potentially allowing for combined analysis with MRI data.  The initial workflow will be performed on a subset of 12 samples to validate the pipeline and identify any issues and reduce risk before processing the full dataset.
+This document describes the workflow used to analyze Whole Exome Sequencing (WES) data from 71 samples sequenced by Illumina. The primary goal is to identify genetic variants that may be associated with stuttering, potentially enabling combined analysis with MRI data. The pipeline was initially validated on a subset of 12 samples before processing the full cohort.
 
 ### 1.2 Scope
-This workflow specifically covers the analysis of the 71 WES datasets mentioned. Analysis beyond these datasets is outside the scope of this document.
+This workflow covers the analysis of the 71 WES datasets from the 11340/9740 stuttering cohort. Analysis beyond these datasets is outside the scope of this document.
 
 
 
 ## 1.3 Prerequisites
 - **Tools**:
-    - dna-seq-varlociraptor pipeline
-    - Snakemake
-    - Slurm
-    - Python
-    - cookie cutter data science
-    - Jupyter Notebook(TBD)
+    - [dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) v6.1.0 — variant calling pipeline
+    - [Snakemake](https://snakemake.github.io/) ≥9.1.0 — workflow management
+    - [post-calling-snakemake-workflow](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow) — post-variant-calling processing
+    - [vembrane](https://github.com/vembrane/vembrane) — VEP annotation extraction and filtering
+    - [Conda](https://docs.conda.io/en/latest/)/[Mamba](https://mamba.readthedocs.io/) — environment and dependency management
+    - [uv](https://docs.astral.sh/uv/) — Python package manager (for this analysis repo)
+    - Python ≥3.10
+    - SLURM — HPC job scheduling
 - **Data**: 71 WES samples in FASTQ format
-- **Access to Cluster Computers for Data Processing:**
-    - Due to the large size of the datasets, processing requires high-performance computing resources.
-    - This workflow is designed to run on the Great Lakes cluster.
-    - **Job Scheduling:** Utilize SLURM for job management and scheduling.
-    - **Package Management:** Use Conda/Mamba to manage dependencies.
+- **Access to Cluster Computing:**
+    - Processing requires the University of Michigan Great Lakes HPC cluster.
+    - **Job Scheduling:** SLURM for job management and scheduling.
+    - **Package Management:** Conda/Mamba for pipeline environments; uv for analysis code.
 - **Resources**:
   - [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)
-  - [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM)
-  - [Modified dna-seq-varlociraptor Repository](https://github.com/delpropo/dna-seq-varlociraptor):
-  A forked version of the dna-seq-varlociraptor pipeline, optimized for the Great Lakes cluster. This version includes an additional rule to create a final TSV file.
-  - [Conda Documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/index.html): For managing dependencies and environments.
-  - [Snakemake workflow catalog documentation](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html): For instructions on setting up the pipeline with snakedeploy
-  - [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) Template for post variant calling analysis.
+  - [Snakemake workflow catalog — dna-seq-varlociraptor](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html)
+  - [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM) (Access Required)
+  - [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) — project template used for this repository
 
 
-### 1.4 Expected Outcomes
-- A well-documented dataset of identified variants, suitable for future research, regardless of whether variants directly linkable to stuttering are found.
-- **Minimum Deliverable**: Well-documented WES dataset even if no significant variants are found.
-    - Fastq files, associated documents from the core, md5 checksum files, tables with sample id and metadata.
-- **Best Case:** Identification of one or more variants strongly associated with stuttering, enabling correlation studies with existing MRI data.
+### 1.4 Outcomes
+- A well-documented dataset of identified variants, with FASTQ files, core facility documentation, MD5 checksums, and sample metadata.
+- Aggregated variant tables stratified by 23 genes-of-interest groups at 5 allele frequency thresholds.
+- Per-gene variant counts per sample for downstream correlation with MRI phenotypes.
 
-### 1.5 Potential Pitfalls
-- **Sequencing Quality:** There is a possibility of low quality sequencing data or failures in one or more samples.  Analysis will be performed on the data that is available.
-- **Pipeline Issues:** Variant identification pipelines are always improving.  The current pipeline may miss variants or not have enough annotation.  Pipeline risk was reduced by running it on the initial 12 samples before processing all 71.
-- **Storage:** The size of the data may be larger than expected, and storage space should be monitored.  A large number of intermediary files can be created during WES analysis.  Additional storage may be needed on the Great Lakes cluster.
+> **Note:** Original expected outcomes and potential pitfalls from the planning phase have been archived. See [docs/archive/outcomes_and_pitfalls.md](docs/archive/outcomes_and_pitfalls.md).
 
 
+
+### 1.5 Contamination Check
+
+During analysis, some samples exhibited unexpected performance. A contamination check was performed to assess sample integrity, which resulted in removing affected samples from the final analysis.
+
+- **Repository:** [contamination-check](https://github.com/Speech-Neurophysiology-Lab/contamination-check) (private — access required)
+- **Method:** VerifyBamID2 and cross-sample concordance analysis
+- **Outcome:** Samples flagged for contamination were excluded from downstream GOI analysis
 
 ### 1.6 References for Tools and Resources
-- **Variant Analysis Pipeline:** [dna-seq-varlociraptor GitHub Repository](https://github.com/snakemake-workflows/dna-seq-varlociraptor)
-- **Shared Data:** [MSA-ChangLabUM Shared Folder on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM) (Access Required)
-- **Vembrane:** [vembrane GitHub Repository](https://github.com/vembrane/vembrane)
+- **Variant Calling Pipeline:** [dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) v6.1.0 (Ensembl release 111, GRCh38)
+- **Post-Calling Pipeline:** [post-calling-snakemake-workflow](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow)
+- **Contamination Check:** [contamination-check](https://github.com/Speech-Neurophysiology-Lab/contamination-check) (private)
+- **Annotation Filtering:** [vembrane](https://github.com/vembrane/vembrane)
+- **Variant Caller:** [Varlociraptor](https://varlociraptor.github.io/)
+- **VEP Plugins Used:** LoFtool, REVEL, GWAS, gnomADc
+- **Shared Data:** [MSA-ChangLabUM on Dropbox](https://www.dropbox.com/home/MSA-ChangLabUM) (Access Required)
+- **Snakemake:** [snakemake.github.io](https://snakemake.github.io/)
+- **Zarr Format:** [zarr.dev](https://zarr.dev/)
 
 
 ## 2. Workflow Overview
@@ -105,30 +113,32 @@ The analysis process involves several key steps:
 - **Step 2:** Verify the integrity of the downloaded FASTQ files by checking their MD5 checksums.
     - Compare the MD5 values of the downloaded files with the provided MD5 checksum file.
 - **Primary Storage:** Great Lakes cluster
-    - **Location:** `/nfs/turbo/umms-sooeunc/9790-JD`
-    - **Location:** `/nfs/turbo/umms-sooeunc/13340-JD`
+    - **Location:** `/nfs/turbo/umms-sooeunc/data/9790-JD`
+    - **Location:** `/nfs/turbo/umms-sooeunc/data/13340-JD`
 - **Backup Location:** Dropbox and/or DataDen
-    - **dropbox:** MSA-ChangLabUM/ImagingGenetics/DNA processing/seq_data_backup
+    - **Dropbox:** MSA-ChangLabUM/ImagingGenetics/DNA processing/seq_data_backup
 - **Access:** Ensure appropriate permissions are set for team members.
-- **Analysis Location:** `/nfs/turbo/umms-sooeunc/9790-JD/analysis` but may be moved.
+- **Analysis Location:** `/nfs/turbo/umms-sooeunc/analysis/WES_varloc/`
 
 
 ### 2.2 Data Preparation (Variant Calling)
-- **Step 1:** Install the `dna-seq-varlociraptor` pipeline using the `deploy_dna-seq-varlociraptor_v5.16.0.sh` script. This script performs the following actions:
-    - Checks if Conda is installed.
-    - Checks if a Conda environment named `varloc_env` already exists. If not, it creates the environment.
-    - Activates the `varloc_env` environment.
-    - Installs `mamba`, `snakedeploy`, and `snakemake` using Conda/Mamba.
-    - Deploys the `dna-seq-varlociraptor` workflow (version 5.16.0) into the specified directory using `snakedeploy`.  Note that the final version of the pipeline may use a different version as updates are made.
-- **Step 2** Setup the `dna-seq-varlociraptor` pipeline on the Great Lakes cluster.
-    - Create the `samples.tsv` file to define the sample metadata, including sample IDs and associated information.
-    - Create the `units.tsv` file to specify the sequencing units, such as FASTQ file paths and read group information.
-    - Configure the `scenario.yaml` file to define the analysis scenario, including variant calling parameters and reference genome details.
-    -  Edit the `config.yaml` file to set global pipeline parameters, such as output directories, resource allocation, and filtering thresholds.
-- **Step 3** Process raw fastq files using the `dna-seq-varlociraptor` pipeline.
-    - **Configuration:** Utilize the configuration files (`samples.tsv`, `units.tsv`, `scenario.yaml`, `config.yaml`) to define pipeline parameters and variant annotation settings.
-    - **Filtering:** Apply minimal filtering at this stage (e.g., remove silent mutations, low-impact variants) to retain potentially relevant variants.
-    - **Output:** Generate a Tab-Separated Values (TSV) file for each sample, containing detailed variant information.
+
+Variant calling was performed using [dna-seq-varlociraptor](https://github.com/snakemake-workflows/dna-seq-varlociraptor) **v6.1.0**, loaded as a Snakemake module (requires Snakemake ≥9.1.0).
+
+**Pipeline Configuration:**
+- **Reference genome:** GRCh38 (Ensembl release 111, 25 chromosomes)
+- **Variant callers:** Freebayes + Delly (structural variants)
+- **FDR control:** 0.001 threshold, `local-smart` mode
+- **Candidate filter:** Excludes LOW impact, KI/GL chromosomes, and a specific chr2 region
+- **Gene list filter:** Restricted to genes in `config/super_interesting_genes.tsv`
+- **VEP annotation:** `--everything --check_existing` with plugins: LoFtool, REVEL, GWAS, gnomADc
+- **Duplicate handling:** MarkDuplicates with `SORTING_COLLECTION_SIZE_RATIO=0.1`
+
+**Setup steps:**
+1. Deploy using `contrib/deploy_dna-seq-varlociraptor_v5.16.0.sh` (initial deployment), then updated to v6.1.0 via Snakemake module system.
+2. Configure `samples.tsv`, `units.tsv`, `scenario.yaml`, and `config.yaml`.
+3. Process raw FASTQ files through the pipeline.
+    - **Output:** BCF files per sample with variant calls and VEP annotations.
 
 ### 2.3 Post-Varlociraptor Data Processing
 
@@ -144,87 +154,68 @@ See the [pipeline README](https://github.com/Speech-Neurophysiology-Lab/post-cal
 
 
 ### 2.4 Analysis
-- **Step 1 (Filtering):** Further filter the grouped TSV file to remove:
-    - Common variants (using stricter frequency thresholds).
-    - Identical variants appearing excessively across samples (potential sequencing artifacts).
-    - Additional filtering criteria will be applied as necessary, based on the data and project requirements.
-- **Step 2 (Gene-Centric Analysis):**
-    - Group variants by gene.
-    - Focus on genes previously implicated or suspected in stuttering.
-    - Map identified variants to this list of candidate genes to assess potential correlations.
-- **Step 3 (Variant-Impact Analysis):**
-    - Search for variants predicted to have a significant impact on protein function (e.g., missense, nonsense, frameshift mutations).
-    - Investigate the potential role of genes harboring these impactful variants in stuttering, even if not previously suspected.
-- **Step 4 (Iterative Refinement)**
-    - Refine filtering criteria based on initial findings.
-    - Adjust analysis parameters to focus on variants of interest.
-- **Step 5 (Reporting):**
-    - Generate reports summarizing findings, including:
-        - List of identified variants.
-        - Gene-centric analysis results.
-        - Variant-impact analysis results.
-    - Visualizations to illustrate key findings and variant distributions.
+- **Filtering:** The aggregated variant set was filtered to remove common variants (population AF thresholds at 10%, 5%, 3%, 1%) and variants appearing in too many samples (potential artifacts). See [docs/filtering.md](docs/filtering.md) for full criteria.
+- **Gene-Centric Analysis:** Variants were grouped by gene and stratified across 23 GOI groups covering speech/language, neurodevelopmental, craniofacial, synaptic, signaling, and evolutionary gene categories.
+- **Individual Analysis:** Per-individual variant burden was characterized across chromosomes, stratified by gene group membership, coding status, and variant class. See [docs/individual_analysis.md](docs/individual_analysis.md).
+- **Quality Control:** Gene selection was validated for coding status, variant class distribution, and count consistency. See [docs/qc.md](docs/qc.md).
+- **Contamination Check:** Sample integrity was verified using VerifyBamID2; contaminated samples were excluded. See [contamination-check](https://github.com/Speech-Neurophysiology-Lab/contamination-check) (private).
 
 
 ## 3. Analysis Considerations
 
-- **Sample Size:** Analyzing only 71 samples is relatively small for discovering novel gene associations with high statistical confidence. Finding multiple significant variants within a single gene across this cohort might be challenging.
-- **Leveraging Prior Knowledge:** The analysis benefits significantly from existing research identifying candidate genes for stuttering. This allows for a more targeted investigation within this dataset.
-- **Outcome Scenarios:**
-    - **Best Case:** Clear identification of variants linked to stuttering.
-    - **Worst Case:** No definitive stuttering-related variants found, but a valuable, annotated variant dataset is produced for future studies.
+- **Sample Size:** With 71 samples, discovering novel gene associations with high statistical confidence is limited. The analysis focused on candidate gene enrichment rather than genome-wide discovery.
+- **Leveraging Prior Knowledge:** The analysis used existing research identifying candidate genes for stuttering (23 curated GOI groups) to enable targeted investigation.
+- **Contamination:** Some samples showed unexpected patterns and were excluded after contamination checks (see §1.5).
+- **Outcome:** A well-documented, annotated variant dataset was produced. GOI-stratified results are available for downstream correlation with MRI phenotypes.
 
 ## 4. Project Organization
 
 
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── raw            <- The original, immutable data dump.
-│   ├── zarr           <- Data stored in Zarr format for efficient access.
-│   ├── groupby        <- Grouped data for analysis.
-│   ├── combined       <- Combined datasets for modeling or reporting.
-│   └── final          <- Finalized datasets ready for publication or archiving.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── config             <- Configuration files for the project, such as parameter settings or
-│                         environment variables
-├── contrib            <- Contributions from external collaborators, such as scripts or notebooks
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for
-│                         WES_Analysis_11340_9740 and configuration for tools like ruff
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-│
-└── WES_Analysis_11340_9740   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes WES_Analysis_11340_9740 a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling
-    │   ├── __init__.py
-    │   ├── predict.py          <- Code to run model inference with trained models
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+├── LICENSE
+├── Makefile                  <- Convenience commands
+├── README.md                 <- This file
+├── pyproject.toml            <- Package metadata and tool config (ruff, etc.)
+├── environment.yml           <- Conda environment definition
+├── load_uv_env.sh            <- Script to activate uv-managed Python environment
+├── config/
+│   └── reference_genes.yaml  <- Curated gene reference configuration
+├── contrib/
+│   └── deploy_dna-seq-varlociraptor_v5.16.0.sh  <- Pipeline deployment script
+├── data/
+│   ├── raw/                  <- Original immutable data
+│   ├── zarr/                 <- Zarr format intermediate data
+│   ├── aggregated/           <- Cross-sample aggregated results
+│   ├── combined/             <- Combined datasets
+│   ├── groupby/              <- Grouped data for analysis
+│   └── variants_of_interest/ <- Filtered variant subsets
+├── docs/
+│   ├── filtering.md          <- Filtering criteria and rationale
+│   ├── individual_analysis.md <- Per-individual analysis methodology
+│   ├── qc.md                 <- Quality control workflow
+│   └── archive/              <- Archived planning documents
+├── notebooks/                <- Jupyter notebooks for ad-hoc analysis
+├── references/
+│   ├── README.md             <- Candidate gene list documentation
+│   ├── genes/                <- Gene reference files (GeneCards CSVs)
+│   ├── bedfiles/             <- BED files for genomic regions
+│   └── papers_combined/      <- Combined gene lists from publications
+├── reports/
+│   └── figures/              <- Generated figures
+├── tests/
+│   └── test_data.py          <- Data validation tests
+├── workspace/                <- Working files and scratch space
+└── WES_Analysis_11340_9740/  <- Python source code
+    ├── __init__.py
+    ├── config.py             <- Project configuration variables
+    ├── dataset.py            <- Data loading and processing
+    ├── combine_gene_references.py <- Combine gene lists from multiple sources
+    ├── extract_tables_pdf.py <- Extract tables from PDF publications
+    ├── reformat_GWAS_table.py <- Reformat GWAS catalog data
+    ├── features.py           <- Feature engineering
+    ├── plots.py              <- Visualization code
+    └── modeling/             <- Model training and prediction
 ```
 
 --------
@@ -235,17 +226,42 @@ See the [pipeline README](https://github.com/Speech-Neurophysiology-Lab/post-cal
 
 ```mermaid
 graph TD
-    A[Raw FASTQ Files] --> B(dna-seq-varlociraptor Pipeline);
-    B -- Sample TSV --> C(Convert to Zarr);
-    C --> D(Groupby Variants & Initial Filter);
-    D -- Variant groupby TSV --> E[Combine Samples to Single File & Filter];
-    E -- Groupby sample TSV --> J[Additional Filtering];
-    J --> F{Analysis};
-    F --> G[Gene-Centric Analysis];
-    F --> H[Impact-Centric Analysis];
-    G --> I[Results];
-    I --> K[Report];
-    H --> I;
-    I -- Refine filter --> F;
+    A[Raw FASTQ Files<br/>71 WES Samples] --> B[dna-seq-varlociraptor v6.1.0<br/>GRCh38 · Ensembl 111<br/>Freebayes + Delly]
+    B --> B1[FDR Control<br/>threshold: 0.001<br/>mode: local-smart]
+    B1 --> B2[VEP Annotation<br/>LoFtool · REVEL · GWAS · gnomADc]
+    B2 --> C0{Contamination Check}
+    C0 -->|Clean Samples| C1[BCF Files]
+    C0 -->|Flagged Samples| X[Excluded from Analysis]
 
+    subgraph post-calling-snakemake-workflow
+        C1 --> C2[BCF Gene Filter<br/>vembrane filter]
+        C2 --> C3[BCF → TSV<br/>vembrane table]
+        C3 --> C4[TSV → Zarr]
+        C4 --> C5[Pivot & Filter]
+        C5 --> C6[Cross-Sample Aggregation]
+        C5 --> C7[Row Count Aggregation]
+        C6 --> D1[Split by 23 GOI Groups<br/>× 5 AF Thresholds]
+        D1 --> D2[Excel Workbooks]
+        D1 --> D3[GOI Groupings Tables<br/>Per-Gene Variant Counts]
+    end
+
+    D2 --> E1{Analysis}
+    D3 --> E1
+    C7 --> E1
+    E1 --> F1[Gene-Centric Analysis<br/>Candidate gene enrichment]
+    E1 --> F2[Individual Analysis<br/>Per-sample variant burden]
+    E1 --> F3[Quality Control<br/>Coverage · coding status]
+    F1 --> G[Results & Reports]
+    F2 --> G
+    F3 --> G
+
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style B1 fill:#fff3e0
+    style B2 fill:#fff3e0
+    style X fill:#ffcdd2
+    style C1 fill:#e8f5e8
+    style D2 fill:#fce4ec
+    style D3 fill:#fce4ec
+    style G fill:#e8f5e8
 ```
