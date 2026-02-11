@@ -1,6 +1,8 @@
 
 ## Filtering Workflow Overview
 
+> **Note:** The post-variant-calling processing steps described here are automated by the [post-calling-snakemake-workflow](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow) pipeline. This document describes the *rationale* behind the filtering choices for this specific stuttering WES project.
+
 Variant identification and filtering in this project is performed in two main stages:
 1. **Initial Variant Calling & FDR Filtering:**
   - Performed using the dna-seq-varlociraptor workflow.

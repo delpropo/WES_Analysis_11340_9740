@@ -138,3 +138,5 @@ insights into rare variant burden in the context of stuttering genetics.
 1. Ensembl Variation - Calculated variant consequences. Available at: https://grch37.ensembl.org/info/genome/variation/prediction/predicted_data.html
 
 2. Ensembl Variation - Pathogenicity predictions. Available at: https://grch37.ensembl.org/info/genome/variation/prediction/protein_function.html
+
+3. Ensembl VEP Formats Documentation. Available at: https://useast.ensembl.org/info/docs/tools/vep/vep_formats.html

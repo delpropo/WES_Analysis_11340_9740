@@ -7,41 +7,40 @@
 
 ## Links within the Project
 
-- [Candidate Genes for association with Stuttering](../references/genes/README.md)
+- [Candidate Genes for association with Stuttering](references/README.md)
 - [Workflow Overview](#2-workflow-overview)
 - [Project Organization](#4-project-organization): Directory structure and file organization for the project.
 - [Example Workflow Diagram](#5-example-workflow-diagram): Visual representation of the analysis pipeline.
 - [Filtering Criteria and Steps](docs/filtering.md)
+- [Individual Analysis Methodology](docs/individual_analysis.md)
+- [Quality Control Workflow](docs/qc.md)
+
+## Relationship to post-calling-snakemake-workflow
+
+This repository contains **project-specific** documentation and ad-hoc analysis code for the stuttering WES project. The generic, reusable **pipeline** that processes the variant data is maintained separately:
+
+- **Pipeline Repository**: [post-calling-snakemake-workflow](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow) — Snakemake workflow for BCF → TSV → Zarr → Aggregation → GOI Analysis
+- **This Repository**: Project-specific methodology (filtering rationale, gene selection, individual analysis, QC), ad-hoc analysis notebooks, and reference gene lists for the 11340/9740 stuttering cohort
 
 
 
 # WES Data Analysis Workflow for Variant Identification
 
 ## Timeline
-```mermaid
-gantt
-    title WES Data Analysis Timeline
-    dateFormat YYYY-MM-DD
-    section WES
-        DNA Submitted          :done,   wes1, 2025-04-07, 2d
-        Sequencing             :done,   wes2, after wes1, 2025-06-17
-        Data Transfer          :done,   wes_transfer, 2025-06-30, 2d
-        QC and Documentation   :active, wes3, 2025-07-01, 7d
-        Variant Calling        :done,   analysis1, after wes_transfer, 14d
-        Post-Processing        :        analysis2, after analysis1, 14d
-        Analysis               :        analysis3, after analysis2, 30d
-    section Development
-        Post-Processing Dev    :active, dev1, 2025-04-01, 100d
-        Analysis Dev           :active, dev2, 2025-05-01, 120d
-    section Vacation
-        Vacation               :done,   vac1, 2025-06-12, 17d
-```
 
-**Legend:**
-- Completed: grey
-- Active: light purple
-- Planned: dark purple
-> **Note:** The vertical red line in the Gantt chart represents the current date.
+> **Note:** The original Gantt chart timeline (April–September 2025) has been archived. See [docs/archive/timeline.md](docs/archive/timeline.md) for the original timeline.
+
+### Project Milestones
+
+| Milestone | Status | Date |
+|-----------|--------|------|
+| DNA Submitted | Completed | April 2025 |
+| Sequencing Completed | Completed | June 2025 |
+| Data Transfer | Completed | June 2025 |
+| Variant Calling (dna-seq-varlociraptor) | Completed | July 2025 |
+| Post-Processing Pipeline (Snakemake) | Completed | October 2025 |
+| GOI Analysis Extension | Completed | 2025 |
+| Individual Analysis & QC | In Progress | — |
 
 
 ## 1. Introduction
@@ -80,18 +79,14 @@ This workflow specifically covers the analysis of the 71 WES datasets mentioned.
 
 ### 1.4 Expected Outcomes
 - A well-documented dataset of identified variants, suitable for future research, regardless of whether variants directly linkable to stuttering are found.
-- Sequencing should be completed in late June or July 2025 and final analysis should be completed by September 2025.
 - **Minimum Deliverable**: Well-documented WES dataset even if no significant variants are found.
     - Fastq files, associated documents from the core, md5 checksum files, tables with sample id and metadata.
 - **Best Case:** Identification of one or more variants strongly associated with stuttering, enabling correlation studies with existing MRI data.
 
 ### 1.5 Potential Pitfalls
-- **Data Availability:** The raw sequencing data (fastq files) are expected in late June or July 2025, but delays are possible.
-- **Sequencing Failure:** There is a possibility of low quality sequencing data or failures in one or more samples when the WES is completed.  Analysis will be performed on the data that is available.
-- **Timeline and funding:** The project is funded until September 2025, and any delays in data availability may impact the analysis timeline.
-- **Pipeline Issues:** Variant identification pipelines are always improving.  The current pipeline may miss variants or not have enough annotation.  Pipeline risk will be reduced by running it on the initial 12 samples.
-- **Storage:** The size of the data may be larger than expected, and storage space should be monitored.  A large number of intermediary files can be created during WES analysis.  Additional storage may be needed on the Great Lakes cluster or modifications.
-    - 7.7TB of 20TB in use as of 4/24/25
+- **Sequencing Quality:** There is a possibility of low quality sequencing data or failures in one or more samples.  Analysis will be performed on the data that is available.
+- **Pipeline Issues:** Variant identification pipelines are always improving.  The current pipeline may miss variants or not have enough annotation.  Pipeline risk was reduced by running it on the initial 12 samples before processing all 71.
+- **Storage:** The size of the data may be larger than expected, and storage space should be monitored.  A large number of intermediary files can be created during WES analysis.  Additional storage may be needed on the Great Lakes cluster.
 
 
 
@@ -136,17 +131,16 @@ The analysis process involves several key steps:
     - **Output:** Generate a Tab-Separated Values (TSV) file for each sample, containing detailed variant information.
 
 ### 2.3 Post-Varlociraptor Data Processing
-- **Step 1:** Convert the individual sample TSV files into the Zarr format without modification. Zarr allows for efficient storage and retrieval of large datasets. The conversion from VCF to TSV is done by with `vembrane table` command and may be done manually outside of the `dna-seq-varlociraptor` pipeline. For more details, refer to the [vembrane GitHub Repository](https://github.com/vembrane/vembrane).
-- **Step 2:** Read the Zarr file for each sample and output a reformatted TSV for each sample.
-    - Filter to remove common variants based on allele frequency annotations.
-    - Groupby unique variants as there are multiple rows for each variant due to annotations which can apply multiple values for each unique variant. This step ensures that the dataset is structured to combine sample genotypes information for each variant for downstream analysis, with each row representing a unique variant and its corresponding sample information.
-    - A consolidated TSV file where each row contains a unique variant with annotation and the associated genotype for each details.
 
-- **step 3:** Combine Individual Sample Files
-    - Merge all individual sample TSV files into a single consolidated file with each row representing a unique variant with genotype information for each sample in columns.
-    - Filter variants to remove variants which are too common across samples which will be defined.
-    - Ensure that the consolidated file is structured for downstream analysis.
-    - Save the consolidated file in TSV format for further filtering and analysis.
+Post-variant-calling data processing is handled by the [post-calling-snakemake-workflow](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow) Snakemake pipeline. This automates the following steps:
+
+- **BCF → TSV Conversion**: Using `vembrane table` to extract variant annotations
+- **TSV → Zarr Conversion**: Efficient columnar storage for large datasets
+- **Pivot & Aggregation**: Cross-sample grouping and aggregation with configurable row/position count cutoffs
+- **GOI Group Analysis**: Stratification across 23 gene groups at 5 allele frequency thresholds, with Excel workbook output
+- **Optional Gene & AF Filtering**: Configurable at the BCF level and during GOI analysis
+
+See the [pipeline README](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow/blob/main/README.md) for full pipeline documentation, and [docs/goi_analysis.md](https://github.com/Speech-Neurophysiology-Lab/post-calling-snakemake-workflow/blob/main/docs/goi_analysis.md) for GOI analysis details.
 
 
 ### 2.4 Analysis
